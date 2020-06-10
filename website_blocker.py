@@ -11,7 +11,7 @@ while True:
     if dt(dt.now().year, dt.now().month, dt.now().day, 7) < dt.now() < dt(dt.now().year, dt.now().month, dt.now().day, 23):
         print(dt.now())
         print("Currently in work mode, social media is blocked")
-        with open(hosts_temp,'r+') as file:
+        with open(hosts_path,'r+') as file:
             content=file.read()
             for website in website_list:
                 if website in content:
@@ -22,8 +22,10 @@ while True:
     else:
         with open(hosts_path, 'r+') as file:
             content=file.readlines()
+            file.seek(0)
             for line in content:
                 if not any(website in line for website in website_list):
                     file.write(line)
+                file.truncate()
         print("Free time")
         time.sleep(5)
